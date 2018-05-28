@@ -1,0 +1,48 @@
+programming-language: python3
+intents:
+  pool1:
+    slots:
+      - id: question1
+        question: Please enter the room number. (ex. 201)
+      - id: question2
+        question: Please enter meeting title.
+      - id: question3
+        question: Please enter reservation name.
+      - id: question4
+        question: Please enter meeting date. (ex. 2018-06-23)
+      - id: question5
+        question: Please enter meeting start time. (ex. 13:30)
+      - id: question6
+        question: Please enter meeting end time. (ex. 17:30)
+    
+        
+  pool2:
+    slots:
+      - id: question1
+        question: Please enter reservation name.
+      - id: question2
+        question: Please enter meeting date to check. (ex. 2018-06-23)
+        
+  pool3:
+    slots:
+      - id: question1
+        question: Please enter reservation name.
+      - id: question2
+        question: Please enter reservation number to modify. (ex. 82)
+      - id: question3
+        question: Please enter the room number to modify. (ex. 201)
+      - id: question4
+        question: Please enter meeting title to modify.
+      - id: question5
+        question: Please enter meeting date to modify. (ex. 2018-06-23)
+      - id: question6
+        question: Please enter meeting start time to modify. (ex. 13:30)
+      - id: question7
+        question: Please enter meeting end time to modify. (ex. 17:30)
+
+  pool4:
+    slots:
+      - id: question1
+        question: Please enter reservation name.
+      - id: question2
+        question: Please enter reservation number to cancel. (ex. 82)
