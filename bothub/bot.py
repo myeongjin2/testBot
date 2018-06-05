@@ -14,7 +14,7 @@ _password = "password"
 
 db = pymysql.connect(host=_host, user=_user, db=_db, password=_password, charset='utf8')
 cur = db.cursor(pymysql.cursors.DictCursor)
-        
+
 class Bot(BaseBot):
     #/start 시 출력
     def on_start(self, event, context):
@@ -97,8 +97,9 @@ class Bot(BaseBot):
     #에러 메시지 출력 함수
     def send_error_message(self, event):
         menu = self.get_project_data().get('set_menu').split(',') #bothub Properties 메뉴 생성
-        message = Message(event).set_text('죄송합니다.\n'\
-                                          '무슨 말씀인지 이해를 못했어요.\n다시 한번 입력해주세요.')
+        message = Message(event).set_text('죄송합니다.ㅠ_ㅠ\n\
+                                          무슨 말씀인지 이해를 못했어요.\n\
+                                          다시 한번 입력해주세요.')
         for item in menu:
             message.add_keyboard_button(item) #키보드 버튼 생성
         self.send_message(message)
@@ -289,6 +290,7 @@ class Bot(BaseBot):
                                       +'회의 일자: '+str(row['date'])+'\n'\
                                       +'회의 시작 시간: '+str(row['startTime'])+'\n'\
                                       +'회의 종료 시간: '+str(row['endTime'])+'\n')
+    
     #날짜 수정 함수
     def modify(self, event, context):
         event['content']='/intent pool4'
@@ -298,37 +300,34 @@ class Bot(BaseBot):
         try:
             q1 = kwargs.get('question1') #slots id 와 대응
             q2 = kwargs.get('question2')
-            q3 = kwargs.get('question3')
-            q4 = kwargs.get('question4')
-            q5 = kwargs.get('question5')
-            q6 = kwargs.get('question6')
-            q7 = kwargs.get('question7')
             
             sql = "select * from meeting where id=%s and name=%s" #예약번호와 이름이 일치하는지 확인하는 query
+            
             cur.execute(sql, (q2,q1))
             rows = cur.fetchall()
             
-            #예약 수정시 meetingRoom과 date가 중복되는지 확인하는 query
-            sql = "select * from meeting where meetingRoom = %s and date = %s "\
-                    "and ((startTime < %s and endTime > %s)"\
-                    "or (startTime >= %s and endTime <= %s)"\
-                    "or (startTime <= %s and endTime >= %s))"
+            for row in rows:
+                global meetingRoom2 #예약 정보를 set_pool7으로 넘겨주기 위해 global 변수 선언
+                global id2
+                global name2
+                
+                meetingRoom2 = row['meetingRoom']
+                id2 = row['id']
+                name2 = row['name']
             
-            cur.execute(sql, (q3, q5, q6, q7, q6, q7, q6, q7))
-            rows2 = cur.fetchall()
-        
         #각 column에 맞지 않는 데이터가 들어갔을 때
         except:
+            '''
             menu = self.get_project_data().get('set_menu').split(',') #bothub Properties 메뉴 생성
-            message = Message(event).set_text('날짜 수정 정보가 올바르지 않습니다.\n다시 한번 입력해주세요.')
+            message = Message(event).set_text('예약번호가 올바르지 않습니다.\n다시 한번 입력해주세요.')
                     
             for item in menu:
                 message.add_keyboard_button(item) #키보드 버튼 생성
                
             self.send_message(message)
-
+            '''
         else:
-            if(str(rows)=="()"): #예약번호와 이름이 일치하는지 확인하는 query가 없을 때
+            if(str(rows)=="()"): #예약번호와 이름이 일치하는 query가 없을 때
                 menu = self.get_project_data().get('set_menu').split(',') #bothub Properties 메뉴 생성
                 message = Message(event).set_text('\''+q1+'\'님의 예약번호 '+'\'' +q2+'\'번 예약 내역이 없습니다.\n다시 한번 입력해주세요.')
                 for item in menu:
@@ -336,24 +335,57 @@ class Bot(BaseBot):
                
                 self.send_message(message)
                 
-            elif(str(rows2)!="()"): #중복확인 query에서 중복되는 값이 나왔을 때
+            else: #중복확인 query에서 중복되는 값이 안나왔을 때
+                self.modify_data(event, context)
+    
+    #날짜 수정 data input 함수
+    def modify_data(self, event, context):
+        event['content']='/intent pool5'
+        self.dispatcher.dispatch(event, context)
+                
+    def set_pool5(self, event, context, **kwargs):
+        try:
+            q1 = kwargs.get('question1') #slots id 와 대응
+            q2 = kwargs.get('question2')
+            q3 = kwargs.get('question3')
+            
+            #예약 수정시 meetingRoom과 date가 중복되는지 확인하는 query
+            sql = "select * from meeting where meetingRoom = %s and date = %s "\
+                    "and ((startTime < %s and endTime > %s)"\
+                    "or (startTime >= %s and endTime <= %s)"\
+                    "or (startTime <= %s and endTime >= %s)"\
+                    "or (startTime < %s and endTime > %s))"
+            
+            cur.execute(sql, (meetingRoom2, q1, q2, q3, q2, q3, q2, q3, q2, q2))
+            rows = cur.fetchall()
+            
+        except:
+            menu = self.get_project_data().get('set_menu').split(',') #bothub Properties 메뉴 생성
+            message = Message(event).set_text('날짜 수정 정보가 올바르지 않습니다.\n다시 한번 입력해주세요.')
+
+            for item in menu:
+                message.add_keyboard_button(item) #키보드 버튼 생성
+               
+            self.send_message(message)
+        
+        else:
+            if(str(rows)!="()"): #중복확인 query에서 중복되는 값이 나왔을 때
                 menu = self.get_project_data().get('set_menu').split(',') #bothub Properties 메뉴 생성
-                message = Message(event).set_text('\'' +q5 +' , ' +q6 +' ~ ' +q7 +'\' 는 이미 예약이 있습니다.\n'\
+                message = Message(event).set_text('\'' +q1 +' , ' +q2 +' ~ ' +q3 +'\' 는 이미 예약이 있습니다.\n'\
                                                   '다른 날짜를 입력해주세요.')
                 for item in menu:
                     message.add_keyboard_button(item) #키보드 버튼 생성
                
                 self.send_message(message)
             else: #중복확인 query에서 중복되는 값이 안나왔을 때
-                sql = "update meeting set meetingRoom=%s, subject=%s, date=%s, startTime=%s, endTime=%s\
+                sql = "update meeting set date=%s, startTime=%s, endTime=%s\
                         where id=%s and name=%s" #수정된 예약 정보를 update하는 query
         
-                cur.execute(sql, (q3, q4, q5, q6, q7, q2, q1))
+                cur.execute(sql, (q1, q2, q3, id2, name2))
                 db.commit() #update 적용
                 
-                for row in rows:
-                    menu = self.get_project_data().get('set_menu').split(',') #bothub Properties 메뉴 생성
-                message = Message(event).set_text('\''+q1+'\'님의 날짜 수정이 완료되었습니다.')
+                menu = self.get_project_data().get('set_menu').split(',') #bothub Properties 메뉴 생성
+                message = Message(event).set_text('\''+name2+'\'님의 날짜 수정이 완료되었습니다.')
                 
                 for item in menu:
                     message.add_keyboard_button(item) #키보드 버튼 생성
@@ -361,23 +393,24 @@ class Bot(BaseBot):
                 self.send_message(message)
 
                 sql = "select * from meeting where id = %s" #예약 정보를 불러오기 위한 select query
-                cur.execute(sql, (q2))
+                cur.execute(sql, (id2))
                 rows = cur.fetchall()
-
-                self.send_message('예약 번호: '+str(row['id'])+'\n'\
-                                  +'회의실: '+str(row['meetingRoom'])+'\n'\
-                                  +'신청자: '+str(row['name'])+'\n'\
-                                  +'회의 제목: '+str(row['subject'])+'\n'\
-                                  +'회의 일자: '+str(row['date'])+'\n'\
-                                  +'회의 시작 시간: '+str(row['startTime'])+'\n'\
-                                  +'회의 종료 시간: '+str(row['endTime'])+'\n')
+                
+                for row in rows:
+                    self.send_message('예약 번호: '+str(row['id'])+'\n'\
+                                      +'회의실: '+str(row['meetingRoom'])+'\n'\
+                                      +'신청자: '+str(row['name'])+'\n'\
+                                      +'회의 제목: '+str(row['subject'])+'\n'\
+                                      +'회의 일자: '+str(row['date'])+'\n'\
+                                      +'회의 시작 시간: '+str(row['startTime'])+'\n'\
+                                      +'회의 종료 시간: '+str(row['endTime'])+'\n')
     
     #예약 취소 함수
     def cancel(self, event, context):
-        event['content']='/intent pool5'
+        event['content']='/intent pool6'
         self.dispatcher.dispatch(event, context)
 
-    def set_pool5(self, event, context, **kwargs):
+    def set_pool6(self, event, context, **kwargs):
         q1 = kwargs.get('question1') #slots id 와 대응
         q2 = kwargs.get('question2')
         
@@ -442,7 +475,7 @@ class Bot(BaseBot):
         if action.intent == 'today_start_reservation':
             params = action.parameters #api.ai parameters 호출
             
-            global date2 #api.ai parameters의 값을 global 변수 형태로 set_pool6함수로 전달
+            global date2 #api.ai parameters의 값을 global 변수 형태로 set_pool7함수로 전달
             date2 = params['date']
             global time2
             time2 = params['time']
@@ -459,11 +492,11 @@ class Bot(BaseBot):
             return True
         
     def today_start_reservation(self, event, context):
-        event['content']='/intent pool6'
+        event['content']='/intent pool7'
         self.dispatcher.dispatch(event, context)
         
     #/intent pools가 정상적으로 완료되면 set_pool 함수로 intent에 저장된 값을 불러옴
-    def set_pool6(self, event, context, **kwargs):
+    def set_pool7(self, event, context, **kwargs):
         try:
             q1 = kwargs.get('question1') #slots id 와 대응
             q2 = kwargs.get('question2')
@@ -476,8 +509,8 @@ class Bot(BaseBot):
             sql = "select * from meeting where meetingRoom = %s and date = %s "\
                     "and ((startTime < %s and endTime > %s)"\
                     "or (startTime >= %s and endTime <= %s)"\
-                    "or (startTime <= %s and endTime >= %s))"\
-                    "or (startTime < %s and endTime > %s)"
+                    "or (startTime <= %s and endTime >= %s)"\
+                    "or (startTime < %s and endTime > %s))"
             
             cur.execute(sql, (q1, q4, q5, q6, q5, q6, q5, q6, q5, q5))
             rows = cur.fetchall()

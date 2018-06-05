@@ -9,7 +9,7 @@ intents:
       - id: question3
         question: 성함이 어떻게 되세요?
       - id: question4
-        question: 회의 날짜는 언제인가요? (ex. 2018-06-23)
+        question: 회의 날짜는 언제인가요? (ex. 2018-07-23)
       - id: question5
         question: 몇시에 시작하세요?(ex. 13:30)
       - id: question6
@@ -18,40 +18,39 @@ intents:
   pool2:
     slots:
       - id: question1
-        question: 확인하실 회의 날짜는 언제인가요? (ex. 2018-06-23)
+        question: 확인하실 회의 날짜는 언제인가요? (ex. 2018-07-23)
         
   pool3:
     slots:
       - id: question1
         question: 성함이 어떻게 되세요?
       - id: question2
-        question: 확인하실 회의 날짜는 언제인가요? (ex. 2018-06-23)
+        question: 확인하실 회의 날짜는 언제인가요? (ex. 2018-07-23)
         
   pool4:
     slots:
       - id: question1
         question: 성함이 어떻게 되세요?
       - id: question2
-        question: 예약 번호는 어떻게 되세요? (ex. 82)
-      - id: question3
-        question: 몇 회의실로 수정할까요? (ex. 201)
-      - id: question4
-        question: 회의 제목은 어떻게 수정할까요?
-      - id: question5
-        question: 회의 날짜는 언제로 수정할까요? (ex. 2018-06-23)
-      - id: question6
+        question: 예약 번호는 어떻게 되세요? (ex. 183)
+        
+  pool5:
+    slots:
+      - id: question1
+        question: 수정하실 회의 날짜는 언제인가요? (ex. 2018-07-23)
+      - id: question2
         question: 몇시에 시작하세요?(ex. 13:30)
-      - id: question7
+      - id: question3
         question: 몇시에 끝나세요? (ex. 17:30)
 
-  pool5:
+  pool6:
     slots:
       - id: question1
         question: 성함이 어떻게 되세요?
       - id: question2
-        question: 예약 번호는 어떻게 되세요? (ex. 82)
+        question: 예약 번호는 어떻게 되세요? (ex. 183)
 
-  pool6:
+  pool7:
     slots:
       - id: question1
         question: 몇 회의실을 예약할까요? (ex. 201)
@@ -61,3 +60,4 @@ intents:
         question: 성함이 어떻게 되세요?
       - id: question6
         question: 몇시에 끝나세요? (ex. 17:30)
+        
