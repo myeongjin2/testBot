@@ -3,50 +3,61 @@ intents:
   pool1:
     slots:
       - id: question1
-        question: Please enter the room number. (ex. 201)
+        question: 몇 회의실을 예약할까요? (ex. 201)
       - id: question2
-        question: Please enter meeting title.
+        question: 회의제목을 입력해주세요.
       - id: question3
-        question: Please enter reservation name.
+        question: 성함이 어떻게 되세요?
       - id: question4
-        question: Please enter meeting date. (ex. 2018-06-23)
+        question: 회의 날짜는 언제인가요? (ex. 2018-06-23)
       - id: question5
-        question: Please enter meeting start time. (ex. 13:30)
+        question: 몇시에 시작하세요?(ex. 13:30)
       - id: question6
-        question: Please enter meeting end time. (ex. 17:30)
+        question: 몇시에 끝나세요? (ex. 17:30)
 
   pool2:
     slots:
       - id: question1
-        question: Please enter meeting date to check. (ex. 2018-06-23)
+        question: 확인하실 회의 날짜는 언제인가요? (ex. 2018-06-23)
         
   pool3:
     slots:
       - id: question1
-        question: Please enter reservation name.
+        question: 성함이 어떻게 되세요?
       - id: question2
-        question: Please enter meeting date to check. (ex. 2018-06-23)
+        question: 확인하실 회의 날짜는 언제인가요? (ex. 2018-06-23)
         
   pool4:
     slots:
       - id: question1
-        question: Please enter reservation name.
+        question: 성함이 어떻게 되세요?
       - id: question2
-        question: Please enter reservation number to modify. (ex. 82)
+        question: 예약 번호는 어떻게 되세요? (ex. 82)
       - id: question3
-        question: Please enter the room number to modify. (ex. 201)
+        question: 몇 회의실로 수정할까요? (ex. 201)
       - id: question4
-        question: Please enter meeting title to modify.
+        question: 회의 제목은 어떻게 수정할까요?
       - id: question5
-        question: Please enter meeting date to modify. (ex. 2018-06-23)
+        question: 회의 날짜는 언제로 수정할까요? (ex. 2018-06-23)
       - id: question6
-        question: Please enter meeting start time to modify. (ex. 13:30)
+        question: 몇시에 시작하세요?(ex. 13:30)
       - id: question7
-        question: Please enter meeting end time to modify. (ex. 17:30)
+        question: 몇시에 끝나세요? (ex. 17:30)
 
   pool5:
     slots:
       - id: question1
-        question: Please enter reservation name.
+        question: 성함이 어떻게 되세요?
       - id: question2
-        question: Please enter reservation number to cancel. (ex. 82)
+        question: 예약 번호는 어떻게 되세요? (ex. 82)
+
+  pool6:
+    slots:
+      - id: question1
+        question: 몇 회의실을 예약할까요? (ex. 201)
+      - id: question2
+        question: 회의제목을 입력해주세요.
+      - id: question3
+        question: 성함이 어떻게 되세요?
+      - id: question6
+        question: 몇시에 끝나세요? (ex. 17:30)
