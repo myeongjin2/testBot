@@ -97,9 +97,9 @@ class Bot(BaseBot):
     #에러 메시지 출력 함수
     def send_error_message(self, event):
         menu = self.get_project_data().get('set_menu').split(',') #bothub Properties 메뉴 생성
-        message = Message(event).set_text('죄송합니다.ㅠ_ㅠ\n\
-                                          무슨 말씀인지 이해를 못했어요.\n\
-                                          다시 한번 입력해주세요.')
+        message = Message(event).set_text('죄송합니다.ㅠ_ㅠ\n'\
+                                          '무슨 말씀인지 이해를 못했어요.\n'\
+                                          '다시 한번 입력해주세요.')
         for item in menu:
             message.add_keyboard_button(item) #키보드 버튼 생성
         self.send_message(message)
@@ -132,12 +132,12 @@ class Bot(BaseBot):
             
             #예약시 meetingRoom과 date가 중복되는지 확인하는 query
             sql = "select * from meeting where meetingRoom = %s and date = %s "\
-                    "and ((startTime < %s and endTime > %s)"\
-                    "or (startTime >= %s and endTime <= %s)"\
-                    "or (startTime <= %s and endTime >= %s))"\
-                    "or (startTime < %s and endTime > %s)"
+                    "and ((startTime >= %s and startTime <= %s)"\
+                    "or(endTime >= %s and endTime <= %s)"\
+                    "or (startTime <= %s and endTime >= %s))"
             
-            cur.execute(sql, (q1, q4, q5, q6, q5, q6, q5, q6, q5, q5))
+            cur.execute(sql, (q1, q4, q5, q6, q5, q6, q5, q6))
+            rows = cur.fetchall()
         
         #각 column에 맞지 않는 데이터가 들어갔을 때
         except pymysql.InternalError:
@@ -351,12 +351,11 @@ class Bot(BaseBot):
             
             #예약 수정시 meetingRoom과 date가 중복되는지 확인하는 query
             sql = "select * from meeting where meetingRoom = %s and date = %s "\
-                    "and ((startTime < %s and endTime > %s)"\
-                    "or (startTime >= %s and endTime <= %s)"\
-                    "or (startTime <= %s and endTime >= %s)"\
-                    "or (startTime < %s and endTime > %s))"
+                    "and ((startTime >= %s and startTime <= %s)"\
+                    "or(endTime >= %s and endTime <= %s)"\
+                    "or (startTime <= %s and endTime >= %s))"
             
-            cur.execute(sql, (meetingRoom2, q1, q2, q3, q2, q3, q2, q3, q2, q2))
+            cur.execute(sql, (meetingRoom2, q1, q2, q3, q2, q3, q2, q3))
             rows = cur.fetchall()
             
         except:
@@ -507,12 +506,11 @@ class Bot(BaseBot):
             
             #예약시 meetingRoom과 date가 중복되는지 확인하는 query
             sql = "select * from meeting where meetingRoom = %s and date = %s "\
-                    "and ((startTime < %s and endTime > %s)"\
-                    "or (startTime >= %s and endTime <= %s)"\
-                    "or (startTime <= %s and endTime >= %s)"\
-                    "or (startTime < %s and endTime > %s))"
+                    "and ((startTime >= %s and startTime <= %s)"\
+                    "or(endTime >= %s and endTime <= %s)"\
+                    "or (startTime <= %s and endTime >= %s))"
             
-            cur.execute(sql, (q1, q4, q5, q6, q5, q6, q5, q6, q5, q5))
+            cur.execute(sql, (q1, q4, q5, q6, q5, q6, q5, q6))
             rows = cur.fetchall()
         
         #각 column에 맞지 않는 데이터가 들어갔을 때
@@ -592,4 +590,5 @@ class Bot(BaseBot):
             message.add_keyboard_button('%d:00' % i)
         
         self.send_message(message)
-    '''
+    '''      
+                    
