@@ -11,7 +11,7 @@ intents:
       - id: question4
         question: 회의 날짜는 언제인가요? (ex. 2018-07-23)
       - id: question5
-        question: 몇시에 시작하세요?(ex. 13:30)
+        question: 몇시에 시작하세요? (ex. 13:30)
       - id: question6
         question: 몇시에 끝나세요? (ex. 17:30)
 
@@ -39,7 +39,7 @@ intents:
       - id: question1
         question: 수정하실 회의 날짜는 언제인가요? (ex. 2018-07-23)
       - id: question2
-        question: 몇시에 시작하세요?(ex. 13:30)
+        question: 몇시에 시작하세요? (ex. 13:30)
       - id: question3
         question: 몇시에 끝나세요? (ex. 17:30)
 

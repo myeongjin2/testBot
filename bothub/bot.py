@@ -171,7 +171,7 @@ class Bot(BaseBot):
 
                 self.send_message('예약 번호: '+str(row['id'])+'\n'\
                                   +'회의실: '+str(row['meetingRoom'])+'\n'\
-                                  +'신청자: '+str(row['name'])+'\n'\
+                                  +'예약자: '+str(row['name'])+'\n'\
                                   +'회의 제목: '+str(row['subject'])+'\n'\
                                   +'회의 일자: '+str(row['date'])+'\n'\
                                   +'회의 시작 시간: '+str(row['startTime'])+'\n'\
@@ -232,7 +232,7 @@ class Bot(BaseBot):
                 for row in rows:
                     self.send_message('예약 번호: '+str(row['id'])+'\n'\
                                       +'회의실: '+str(row['meetingRoom'])+'\n'\
-                                      +'신청자: '+str(row['name'])+'\n'\
+                                      +'예약자: '+str(row['name'])+'\n'\
                                       +'회의 제목: '+str(row['subject'])+'\n'\
                                       +'회의 일자: '+str(row['date'])+'\n'\
                                       +'회의 시작 시간: '+str(row['startTime'])+'\n'\
@@ -285,7 +285,7 @@ class Bot(BaseBot):
                 for row in rows:
                     self.send_message('예약 번호: '+str(row['id'])+'\n'\
                                       +'회의실: '+str(row['meetingRoom'])+'\n'\
-                                      +'신청자: '+str(row['name'])+'\n'\
+                                      +'예약자: '+str(row['name'])+'\n'\
                                       +'회의 제목: '+str(row['subject'])+'\n'\
                                       +'회의 일자: '+str(row['date'])+'\n'\
                                       +'회의 시작 시간: '+str(row['startTime'])+'\n'\
@@ -398,7 +398,7 @@ class Bot(BaseBot):
                 for row in rows:
                     self.send_message('예약 번호: '+str(row['id'])+'\n'\
                                       +'회의실: '+str(row['meetingRoom'])+'\n'\
-                                      +'신청자: '+str(row['name'])+'\n'\
+                                      +'예약자: '+str(row['name'])+'\n'\
                                       +'회의 제목: '+str(row['subject'])+'\n'\
                                       +'회의 일자: '+str(row['date'])+'\n'\
                                       +'회의 시작 시간: '+str(row['startTime'])+'\n'\
@@ -545,7 +545,7 @@ class Bot(BaseBot):
 
                 self.send_message('예약 번호: '+str(row['id'])+'\n'\
                                   +'회의실: '+str(row['meetingRoom'])+'\n'\
-                                  +'신청자: '+str(row['name'])+'\n'\
+                                  +'예약자: '+str(row['name'])+'\n'\
                                   +'회의 제목: '+str(row['subject'])+'\n'\
                                   +'회의 일자: '+str(row['date'])+'\n'\
                                   +'회의 시작 시간: '+str(row['startTime'])+'\n'\
@@ -590,5 +590,4 @@ class Bot(BaseBot):
             message.add_keyboard_button('%d:00' % i)
         
         self.send_message(message)
-    '''      
-                    
+    '''
