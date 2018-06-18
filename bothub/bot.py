@@ -471,6 +471,10 @@ class Bot(BaseBot):
             self.cancel(event, '예약 취소')
             return True
         
+        if action.intent == 'hello':
+            self.send_welcome_message(event)
+            return True
+        
         if action.intent == 'today_start_reservation':
             params = action.parameters #api.ai parameters 호출
             
